@@ -23,7 +23,7 @@ float snoise(vec2 v) {
     vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
     m = m*m ;
     m = m*m ;
-    vec3 x = 2.0 * frac(p * C.www) - 1.0;
+    vec3 x = 2.0 * fract(p * C.www) - 1.0;
     vec3 h = abs(x) - 0.5;
     vec3 ox = floor(x + 0.5);
     vec3 a0 = x - ox;
