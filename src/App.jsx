@@ -1,146 +1,82 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
 import CanvasBackground from './components/CanvasBackground'
 
-
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
-}
-
 export default function App() {
+  const [email, setEmail] = useState('')
+  const [submitted, setSubmitted] = useState(false)
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (email) {
+      setSubmitted(true)
+      setEmail('')
+    }
+  }
+
   return (
-    <main
-      style={{
-        height: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        textAlign: 'center',
-        padding: '0 20px',
-      }}
-    >
+    <div className="main-container">
+      {/* 1. 背景 WebGL Shader Canvas */}
       <CanvasBackground />
-      <h1 style={{ fontSize: '3.5rem', fontWeight: 800, letterSpacing: '-0.03em', marginBottom: '1rem' }}>
-        +Shader+Labs+
-      </h1>
-      <p style={{ fontSize: '1.2rem', opacity: 0.8, maxWidth: '600px', lineHeight: 1.6 }}>
-        基于 Vite + React Three Fiber 构建的动态 GLSL 片元着色器全屏背景效果。
-      </p>
-    </main>
+
+      {/* 2. 顶部 Navigation Bar */}
+      <header className="navbar">
+        <div className="logo">
+          <span className="logo-symbol">+</span>Shader<span className="logo-highlight">+</span>Labs
+        </div>
+        <a
+          href="https://github.com/industrenderAI/shaderlabs"
+          target="_blank"
+          rel="noreferrer"
+          className="github-link"
+        >
+          GitHub ↗
+        </a>
+      </header>
+
+      {/* 3. 中央 Hero 主内容区 */}
+      <main className="hero-content">
+        <div className="badge">
+          <span className="badge-dot"></span> Experiment v1.0
+        </div>
+
+        <h1 className="hero-title">
+          +Shader+Labs Experiment+
+        </h1>
+
+        <p className="hero-description">
+          Curated resources for designers and developers. Shaders, crazy pixel experiments, and business development kits.
+        </p>
+
+        {/* 邮件订阅 Form */}
+        <form className="subscribe-form" onSubmit={handleSubmit}>
+          {submitted ? (
+            <div className="success-msg">✓ Welcome to the experiment!</div>
+          ) : (
+            <>
+              <input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="subscribe-input"
+              />
+              <button type="submit" className="subscribe-btn">
+                Join Waitlist
+              </button>
+            </>
+          )}
+        </form>
+
+        <p className="privacy-note">
+          By joining you agree to our <a href="#">Privacy Policy</a>.
+        </p>
+      </main>
+
+      {/* 4. 页脚 Footer */}
+      <footer className="footer">
+        <span>© 2026 ShaderLabs. All rights reserved.</span>
+      </footer>
+    </div>
   )
 }
